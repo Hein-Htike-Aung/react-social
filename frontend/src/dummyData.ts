@@ -1,4 +1,10 @@
-export const Users = [
+export interface User {
+	id: number;
+	profilePicture: string;
+	username: string;
+}
+
+export const Users: User[] = [
 	{
 		id: 1,
 		profilePicture: 'assets/person/1.jpeg',
@@ -51,7 +57,17 @@ export const Users = [
 	},
 ];
 
-export const Posts = [
+export interface Post {
+	id: number;
+	desc?: string;
+	photo: string;
+	date: string;
+	userId: number;
+	like: number;
+	comment: number;
+}
+
+export const Posts: Post[] = [
 	{
 		id: 1,
 		desc: 'Love For All, Hatred For None.',
