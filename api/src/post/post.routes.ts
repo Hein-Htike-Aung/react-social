@@ -4,7 +4,8 @@ import {
 	findPostByIdHandler,
 	likePostHandler,
 	updatePostHandler,
-	timelinePostsHandler
+	timelinePostsHandler,
+	findPostByUserIdHandler
 } from './controllers/post.controller';
 import {
 	createPostSchema,
@@ -39,6 +40,10 @@ export const postRoute = (app: Express) => {
 	/* get a post */
 	app.get(`${POST_URL}/:postId`, findPostByIdHandler);
 
+
+	/* Find Post By User Id */
+	app.get(`${POST_URL}/by-userId/:userId`, findPostByUserIdHandler);
+
 	/* Like / dislike a post */
 	app.patch(
 		`${POST_URL}/like/:postId`,
@@ -48,8 +53,9 @@ export const postRoute = (app: Express) => {
 
 	/* Get timeline posts (Current User Posts + current user friends' post) */
 	app.get(
-		`${POST_URL}/timeline/all`,
-		validateRequest(timelinePostsSchema),
+		`${POST_URL}/timeline/all/:userId`,
 		timelinePostsHandler,
 	);
+
+
 };

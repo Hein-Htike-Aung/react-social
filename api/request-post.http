@@ -33,9 +33,8 @@ Content-Type: application/json
 }
 
 ### Get timeline posts (Current User Posts + current user friends' post)
-GET http://localhost:8800/api/post/timeline/all
-Content-Type: application/json
+GET http://localhost:8800/api/post/timeline/all/62a449522071a304f6f5e395
 
-{
-    "userId": "62a449522071a304f6f5e395"
-}
+
+### find Post by userId
+GET http://localhost:8800/api/post/by-userId/62a449522071a304f6f5e395

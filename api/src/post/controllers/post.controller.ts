@@ -65,6 +65,21 @@ export const findPostByIdHandler = async (req: Request, res: Response) => {
 	return res.status(200).json(post);
 };
 
+export const findPostByUserIdHandler = async (
+	req: Request,
+	res: Response,
+) => {
+	const userId = get(req, 'params.userId');
+
+	const user = await findUserbyId(userId);
+
+	if (!user) return res.status(404).send();
+
+	const post = await findPostByUserId(user.id);
+
+	return res.status(200).json(post);
+};
+
 export const likePostHandler = async (req: Request, res: Response) => {
 	const postId = get(req, 'params.postId');
 	const { userId } = req.body;
@@ -85,7 +100,7 @@ export const likePostHandler = async (req: Request, res: Response) => {
 };
 
 export const timelinePostsHandler = async (req: Request, res: Response) => {
-	const currentUserId = get(req, 'body.userId');
+	const currentUserId = get(req, 'params.userId');
 
 	const currentUser = await findUserbyId(currentUserId);
 

@@ -21,14 +21,15 @@ Content-Type: application/json
 
 
 ### Update User
-PATCH http://localhost:8800/api/user/62a4890caec36ce4ff44a487
+PATCH http://localhost:8800/api/user/62a449522071a304f6f5e395
 Content-Type: application/json
 
 {
-    "username": "Updated zen",
-    "email": "Updatedzen@gmail.com",
-    "userId": "62a4890caec36ce4ff44a487",
-    "password": "updatedadminadmin1"
+    "username": "merry",
+    "userId": "62a449522071a304f6f5e395",
+    "city": "New York",
+    "from": "US",
+    "relationship": "Single"
 }
 
 ### Delete User 
@@ -40,7 +41,10 @@ Content-Type: application/json
 }
 
 ### Get User by id
-GET http://localhost:8800/api/user/62a4890caec36ce4ff44a487
+GET http://localhost:8800/api/user/by-query?userId=62a449522071a304f6f5e395
+
+### Get User by username
+GET http://localhost:8800/api/user/by-query?username=merry
 
 
 ### Follow User

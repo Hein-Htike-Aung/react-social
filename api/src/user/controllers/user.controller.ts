@@ -4,6 +4,7 @@ import log from '../../log';
 import {
 	deleteUser,
 	findUserbyId,
+	findUserByUsername,
 	followUser,
 	registerUser,
 	unfollowUser,
@@ -41,7 +42,7 @@ export const updateUserHandler = async (req: Request, res: Response) => {
 
 	if (!user) return res.status(404).send();
 
-	if (user.password) {
+	if (update.password) {
 		const salt = await bcrypt.genSalt(config.get('saltWorkFactor'));
 
 		const hash = await bcrypt.hashSync(update.password, salt);
@@ -76,17 +77,15 @@ export const deleteUserHandler = async (req: Request, res: Response) => {
 	}
 };
 
-export const getUserByIdHandler = async (req: Request, res: Response) => {
-	const userId = get(req, 'params.userId');
+export const getUserHandler = async (req: Request, res: Response) => {
+	const userId = get(req, 'query.userId');
+	const username = get(req, 'query.username');
 
-	const user = await findUserbyId(userId);
+	const user = userId
+		? await findUserbyId(userId)
+		: await findUserByUsername(username);
 
-	console.log(user == null);
-
-	if (!user || user == null) {
-		res.statusMessage = 'Unavailable for personal reasons'
-		return res.status(599).send()
-	};
+	if (!user || user == null) return res.status(404).send();
 
 	return res.send(omit(user, 'password', 'isAdmin', 'updatedAt'));
 };

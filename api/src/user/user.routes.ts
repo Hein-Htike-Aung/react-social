@@ -3,7 +3,7 @@ import validateRequest from '../middleware/validateRequest';
 import {
 	deleteUserHandler,
 	followUserHandler,
-	getUserByIdHandler,
+	getUserHandler,
 	loginHandler,
 	registerUserHandler,
 	unfollowUserHandler,
@@ -47,8 +47,8 @@ export const userRoute = (app: Express) => {
 		deleteUserHandler,
 	);
 
-	/* Find User by id */
-	app.get(`${USER_URL}/:userId`, getUserByIdHandler);
+	/* Find User by query */
+	app.get(`${USER_URL}/by-query`, getUserHandler);
 
 	/* Follow a user */
 	app.patch(

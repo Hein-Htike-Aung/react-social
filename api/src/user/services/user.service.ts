@@ -37,6 +37,10 @@ export const findUserbyId = async (id: string) => {
 	return await User.findById(id);
 };
 
+export const findUserByUsername = async (username: string) => {
+	return await User.findOne({ username });
+};
+
 export const updateUser = async (
 	id: string,
 	update: UpdateQuery<UserDocument>,

@@ -45,7 +45,11 @@ const payload = {
 		desc: string(),
 		city: string(),
 		from: string(),
-		relationship: mixed().oneOf([RelationshipStatus]),
+		relationship: mixed().oneOf([
+			'Single',
+			'Relationship',
+			'PreferNotToSay',
+		]),
 	}),
 };
 

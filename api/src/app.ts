@@ -6,6 +6,7 @@ import { authRoute, userRoute } from './user/user.routes';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import { postRoute } from './post/post.routes';
+const cors = require('cors')
 
 const port = config.get('port') as number;
 const host = config.get('host') as string;
@@ -20,6 +21,7 @@ app.use(
 		extended: true,
 	}),
 );
+app.use(cors());
 app.use(bodyParser.json());
 // app.use(express.urlencoded({ extended: false }));
 

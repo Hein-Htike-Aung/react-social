@@ -1,4 +1,4 @@
-import { UserDocument } from './../../user/models/user.model';
+import User, { UserDocument } from './../../user/models/user.model';
 import { omit } from 'lodash';
 import { DocumentDefinition, QueryOptions, UpdateQuery } from 'mongoose';
 import Post, { PostDocument } from '../models/post.model';
