@@ -1,0 +1,41 @@
+### Create post
+POST http://localhost:8800/api/post
+Content-Type: application/json
+
+{
+    "userId": "62a47947a9b0fe7afdda65bd",
+    "desc": "Nice Post"
+}
+
+### Update post
+PATCH  http://localhost:8800/api/post/62a5621a4ce5362827cd98bd
+Content-Type: application/json
+
+{
+    "userId": "62a449522071a304f6f5e395",
+    "desc": "updated First Post"
+}
+
+### Delete Post
+DELETE http://localhost:8800/api/post/62a5621a4ce5362827cd98bd
+
+
+### Get post by id
+GET http://localhost:8800/api/post/62a566f99c5662be58386fcb
+
+
+### like and dislike post
+PATCH http://localhost:8800/api/post/like/62a566f99c5662be58386fcb
+Content-Type: application/json
+
+{
+    "userId": "62a47947a9b0fe7afdda65bd"
+}
+
+### Get timeline posts (Current User Posts + current user friends' post)
+GET http://localhost:8800/api/post/timeline/all
+Content-Type: application/json
+
+{
+    "userId": "62a449522071a304f6f5e395"
+}
