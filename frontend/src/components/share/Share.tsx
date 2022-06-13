@@ -1,25 +1,62 @@
 import './share.css';
 import { PermMedia, Label, Room, EmojiEmotions } from '@mui/icons-material';
+import { useContext, useRef, useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import axios from 'axios';
+import API_URL from '../../api/apiurl';
 
 const Share = () => {
+	const PF = process.env.REACT_APP_PUBLIC_FOLDER!;
+
+	const { user } = useContext(AuthContext);
+	const descInput = useRef<HTMLInputElement>(null);
+	const [file, setFile] = useState(null);
+
+	const fileUploadHandler = async (e: any) => {
+		e.preventDefault();
+
+		const desc = descInput.current.value || '';
+
+		const newPost = {
+			userId: user._id,
+			desc,
+		};
+
+		try {
+			await axios.post(`${API_URL}/post`, newPost);
+		} catch (error) {}
+	};
+
 	return (
 		<div className='share'>
 			<div className='shareWrapper'>
 				<div className='shareTop'>
-					<img className='shareProfileImg' src='/assets/person/1.jpeg' alt='' />
+					<img
+						className='shareProfileImg'
+						src={user['profilePicture'] || PF + 'person/noAvatar.png'}
+						alt=''
+					/>
 					<input
 						type='text'
 						className='shareInput'
-						placeholder="What's in your mind?"
+						placeholder={"What's in your mind " + user.username + '?'}
+						ref={descInput}
 					/>
 				</div>
 				<hr className='shareHr' />
-				<div className='shareBottom'>
+				<form className='shareBottom' onSubmit={fileUploadHandler}>
 					<div className='shareOptions'>
-						<div className='shareOption'>
+						<label htmlFor='file' className='shareOption'>
 							<PermMedia htmlColor='tomato' className='shareIcon' />
 							<span className='shareOptionText'>Photo or video</span>
-						</div>
+							<input
+								type='file'
+								style={{ display: 'none' }}
+								id='file'
+								accept='.png,.jpeg,.jpg'
+								onChange={(e) => setFile(e.target.files[0])}
+							/>
+						</label>
 						<div className='shareOption'>
 							<Label htmlColor='blue' className='shareIcon' />
 							<span className='shareOptionText'>Tag</span>
@@ -33,8 +70,10 @@ const Share = () => {
 							<span className='shareOptionText'>Feelings</span>
 						</div>
 					</div>
-                    <button className='shareButton'>Share</button>
-				</div>
+					<button type='submit' className='shareButton'>
+						Share
+					</button>
+				</form>
 			</div>
 		</div>
 	);

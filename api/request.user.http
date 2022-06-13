@@ -15,7 +15,7 @@ POST http://localhost:8800/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "zen@gmail.com",
+    "email": "john@gmail.com",
     "password": "adminadmin1"
 }
 

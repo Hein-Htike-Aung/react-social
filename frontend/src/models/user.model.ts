@@ -6,7 +6,7 @@ export enum RelationshipStatus {
 
 export interface User {
 	_id: string;
-    username: string;
+	username: string;
 	email: string;
 	password: string;
 	profilePicture: string;
@@ -18,4 +18,9 @@ export interface User {
 	city: string;
 	from: string;
 	relationship: RelationshipStatus;
+}
+
+export interface UserCredentials {
+	email: string;
+	password: string;
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import { Post } from '../../models/post.model';
 import UserPost from '../post/Post';
 import Share from '../share/Share';
@@ -11,6 +12,7 @@ interface Props {
 
 const Feed = ({ userId }: Props) => {
 	const [posts, setPosts] = useState<Post[]>([]);
+	const { user } = useContext(AuthContext);
 
 	useEffect(() => {
 		const fetchPosts = async () => {
@@ -21,12 +23,11 @@ const Feed = ({ userId }: Props) => {
 		};
 
 		fetchPosts();
-	}, [userId]);
-	// Rendering at onece by putting empty array
-	// But Feed is being used in two place
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [userId, user._id]);
 
 	const geTimelinePosts = async () => {
-		const res = await axios.get(`/post/timeline/all/62a449522071a304f6f5e395`);
+		const res = await axios.get(`/post/timeline/all/${user._id}`);
 		return res.data;
 	};
 
@@ -40,7 +41,6 @@ const Feed = ({ userId }: Props) => {
 		<div className='feed'>
 			<div className='feedWrapper'>
 				<Share />
-
 				{posts.map((p) => (
 					<UserPost key={p._id} post={p} />
 				))}

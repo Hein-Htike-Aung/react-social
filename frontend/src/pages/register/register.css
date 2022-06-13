@@ -82,3 +82,8 @@
 	font-weight: 500;
 	cursor: pointer;
 }
+
+.loginLink {
+	text-decoration: none;
+	color: #fff;
+}

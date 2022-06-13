@@ -1,11 +1,13 @@
-import './post.css';
 import { MoreVert } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
-import { Post } from '../../models/post.model';
 import axios from 'axios';
-import { User } from '../../models/user.model';
-import { format } from 'timeago.js';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { format } from 'timeago.js';
+import API_URL from '../../api/apiurl';
+import { AuthContext } from '../../context/AuthContext';
+import { Post } from '../../models/post.model';
+import { User } from '../../models/user.model';
+import './post.css';
 
 interface Props {
 	post: Post;
@@ -15,11 +17,19 @@ interface Props {
 const UserPost = ({ post }: Props) => {
 	const [like, setLike] = useState(post.likes.length);
 	const [isLiked, setIsLiked] = useState(false);
-	const [user, setUser] = useState<User>();
+	const [postUser, setPostUser] = useState<User>();
+	const PF = process.env.REACT_APP_PUBLIC_FOLDER!;
+
+	const { user: currentUser } = useContext(AuthContext);
+
+	useEffect(() => {
+		setIsLiked(post.likes.includes(currentUser._id) ? true : false);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentUser._id]);
 
 	useEffect(() => {
 		const fetchUser = async () => {
-			setUser(await getUserById(post.userId));
+			setPostUser(await getUserById(post.userId));
 		};
 
 		fetchUser();
@@ -30,9 +40,13 @@ const UserPost = ({ post }: Props) => {
 		return res.data;
 	};
 
-	const PF = process.env.REACT_APP_PUBLIC_FOLDER!;
+	const likeHandler = async () => {
+		try {
+			await axios.patch(`${API_URL}/post/like/${post._id}`, {
+				userId: currentUser._id,
+			});
+		} catch (error) {}
 
-	const likeHandler = () => {
 		setLike(isLiked ? like - 1 : like + 1);
 		setIsLiked(!isLiked);
 	};
@@ -42,15 +56,19 @@ const UserPost = ({ post }: Props) => {
 			<div className='postWrapper'>
 				<div className='postTop'>
 					<div className='postTopLeft'>
-						<Link to={`profile/${user?.username}`}>
+						<Link to={`profile/${postUser?.username}`}>
 							<img
 								className='postProfileImg'
-								src={user?.profilePicture || PF + 'person/noAvatar.png'}
+								src={
+									postUser?.profilePicture
+										? PF + postUser.profilePicture
+										: PF + 'person/noAvatar.png'
+								}
 								alt=''
 							/>
 						</Link>
 
-						<span className='postUsername'>{user?.username}</span>
+						<span className='postUsername'>{postUser?.username}</span>
 						<span className='postDate'>{format(post?.createdAt)}</span>
 					</div>
 					<div className='postTopRight'>
