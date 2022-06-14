@@ -39,14 +39,14 @@ const Profile = () => {
 				<div className='profileRight'>
 					<div className='profileRightTop'>
 						<div className='profileCover'>
-							<img
+							<img crossOrigin="anonymous"
 								className='profileCoverImg'
 								src={user?.coverPicture || PF + 'person/noCover.png'}
 								alt=''
 							/>
-							<img
+							<img crossOrigin="anonymous"
 								className='profileUserImg'
-								src={user?.profilePicture || PF + 'person/noAvatar.png'}
+								src={user?.profilePicture ? PF + user?.profilePicture : PF + 'person/noAvatar.png'}
 								alt=''
 							/>
 						</div>

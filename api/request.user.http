@@ -62,3 +62,7 @@ Content-Type: application/json
 {
     "userId": "62a4890caec36ce4ff44a487"
 }
+
+
+### Get User's Friends
+GET http://localhost:8800/api/user/friends/62a449522071a304f6f5e395

@@ -12,22 +12,27 @@ interface Props {
 
 const Feed = ({ userId }: Props) => {
 	const [posts, setPosts] = useState<Post[]>([]);
-	const { user } = useContext(AuthContext);
+	const { user: currentUser } = useContext(AuthContext);
 
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const posts = userId
+			const posts: Post[] = userId
 				? await getUserPost(userId)
 				: await geTimelinePosts();
-			setPosts(posts);
+			setPosts(
+				posts.sort(
+					(p1, p2) =>
+						new Date(p2.createdAt).getTime() - new Date(p1.createdAt).getTime(),
+				),
+			);
 		};
 
 		fetchPosts();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [userId, user._id]);
+	}, [userId, currentUser._id]);
 
 	const geTimelinePosts = async () => {
-		const res = await axios.get(`/post/timeline/all/${user._id}`);
+		const res = await axios.get(`/post/timeline/all/${currentUser._id}`);
 		return res.data;
 	};
 
@@ -40,7 +45,7 @@ const Feed = ({ userId }: Props) => {
 	return (
 		<div className='feed'>
 			<div className='feedWrapper'>
-				<Share />
+				{(!userId || currentUser._id === userId) && <Share />}
 				{posts.map((p) => (
 					<UserPost key={p._id} post={p} />
 				))}

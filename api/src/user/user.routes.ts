@@ -3,6 +3,7 @@ import validateRequest from '../middleware/validateRequest';
 import {
 	deleteUserHandler,
 	followUserHandler,
+	getUserFriendsHandler,
 	getUserHandler,
 	loginHandler,
 	registerUserHandler,
@@ -63,4 +64,9 @@ export const userRoute = (app: Express) => {
 		validateRequest(follow_and_unfollow_UserSchema),
 		unfollowUserHandler,
 	);
+
+	/* Get User's Friends */
+	app.get(
+		`${USER_URL}/friends/:userId`, getUserFriendsHandler
+	)
 };

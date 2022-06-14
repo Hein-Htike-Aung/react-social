@@ -12,6 +12,7 @@ import {
 import { updateUser, validateUser } from './../services/user.service';
 import bcrypt from 'bcrypt';
 import config from 'config';
+import User from '../models/user.model';
 
 export const registerUserHandler = async (req: Request, res: Response) => {
 	try {
@@ -132,4 +133,19 @@ export const unfollowUserHandler = async (req: Request, res: Response) => {
 	} else {
 		return res.send(`You can't unfollow yourself`);
 	}
+};
+
+export const getUserFriendsHandler = async (req: Request, res: Response) => {
+	const userId = get(req, 'params.userId');
+
+	const user = await findUserbyId(userId);
+
+	if (!user) return res.status(404).send();
+
+	const userFriends = await Promise.all(
+		user.followings.map((friendId) => {
+			return findUserbyId(friendId);
+		}),
+	);
+	return res.status(200).json(userFriends);
 };

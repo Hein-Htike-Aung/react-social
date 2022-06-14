@@ -6,7 +6,6 @@ import React, { useContext } from 'react';
 import './topbar.css';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import { User } from '../../models/user.model';
 
 const Topbar = () => {
 	const { user } = useContext(AuthContext);
@@ -49,8 +48,8 @@ const Topbar = () => {
 						<span className='topbarIconBadge'>1</span>
 					</div>
 				</div>
-				<Link to={`profile/${user.username}`}>
-					<img
+				<Link to={`/profile/${user.username}`}>
+					<img crossOrigin="anonymous"
 						src={user['profilePicture'] || PF + 'person/noAvatar.png'}
 						alt=''
 						className='topbarImg'

@@ -2,11 +2,11 @@ import { MoreVert } from '@mui/icons-material';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { format } from 'timeago.js';
 import API_URL from '../../api/apiurl';
 import { AuthContext } from '../../context/AuthContext';
 import { Post } from '../../models/post.model';
 import { User } from '../../models/user.model';
+import TimeAgo from 'react-timeago';
 import './post.css';
 
 interface Props {
@@ -24,7 +24,7 @@ const UserPost = ({ post }: Props) => {
 
 	useEffect(() => {
 		setIsLiked(post.likes.includes(currentUser._id) ? true : false);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentUser._id]);
 
 	useEffect(() => {
@@ -58,6 +58,7 @@ const UserPost = ({ post }: Props) => {
 					<div className='postTopLeft'>
 						<Link to={`profile/${postUser?.username}`}>
 							<img
+								crossOrigin='anonymous'
 								className='postProfileImg'
 								src={
 									postUser?.profilePicture
@@ -69,7 +70,9 @@ const UserPost = ({ post }: Props) => {
 						</Link>
 
 						<span className='postUsername'>{postUser?.username}</span>
-						<span className='postDate'>{format(post?.createdAt)}</span>
+						<span className='postDate'>
+							<TimeAgo date={post?.createdAt} />
+						</span>
 					</div>
 					<div className='postTopRight'>
 						<MoreVert />
@@ -77,19 +80,26 @@ const UserPost = ({ post }: Props) => {
 				</div>
 				<div className='postCenter'>
 					<span className='postText'>{post.desc || ''}</span>
-					<img className='postImg' src={post.img ? PF + post.img : ''} alt='' />
+					<img
+						crossOrigin='anonymous'
+						className='postImg'
+						src={post.img ? PF + post.img : ''}
+						alt=''
+					/>
 				</div>
 				<div className='postBottom'>
 					<div className='postBottomLeft'>
 						<img
+							crossOrigin='anonymous'
 							className='likeIcon'
-							src={`${PF}/like.png`}
+							src={`${PF}like.png`}
 							alt=''
 							onClick={likeHandler}
 						/>
 						<img
+							crossOrigin='anonymous'
 							className='likeIcon'
-							src={`${PF}/heart.png`}
+							src={`${PF}heart.png`}
 							alt=''
 							onClick={likeHandler}
 						/>
