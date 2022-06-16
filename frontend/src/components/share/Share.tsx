@@ -39,7 +39,6 @@ const Share = () => {
 			data.append('file', file);
 
 			newPost.img = filename;
-			console.log(data);
 			try {
 				await axios.post(`${API_URL}/upload`, data);
 

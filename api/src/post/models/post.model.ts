@@ -13,7 +13,7 @@ export interface PostDocument extends mongoose.Document {
 export const PostSchema = new mongoose.Schema(
 	{
 		userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-		likes: {
+		likes: { // userId
 			type: Array,
 			default: [],
 		},

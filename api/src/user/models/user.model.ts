@@ -55,11 +55,11 @@ const UserSchema = new mongoose.Schema(
 			type: String,
 			default: '',
 		},
-		followers: {
+		followers: { // UserId
 			type: Array,
 			default: [],
 		},
-		followings: {
+		followings: { // UserId
 			type: Array,
 			default: [],
 		},
