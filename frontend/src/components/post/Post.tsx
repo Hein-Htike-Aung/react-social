@@ -36,7 +36,7 @@ const UserPost = ({ post }: Props) => {
 	}, [post.userId]);
 
 	const getUserById = async (id: String) => {
-		const res = await axios.get(`/user/by-query?userId=${id}`);
+		const res = await axios.get(`${API_URL}/user/by-query?userId=${id}`);
 		return res.data;
 	};
 

@@ -61,7 +61,11 @@ const Share = () => {
 					<img
 						crossOrigin='anonymous'
 						className='shareProfileImg'
-						src={user['profilePicture'] || PF + 'person/noAvatar.png'}
+						src={
+							user?.profilePicture
+								? PF + user['profilePicture']
+								: PF + 'person/noAvatar.png'
+						}
 						alt=''
 					/>
 					<input

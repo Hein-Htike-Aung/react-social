@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
+import API_URL from '../../api/apiurl';
 import { AuthContext } from '../../context/AuthContext';
 import { Post } from '../../models/post.model';
 import UserPost from '../post/Post';
@@ -32,12 +33,12 @@ const Feed = ({ userId }: Props) => {
 	}, [userId, currentUser._id]);
 
 	const geTimelinePosts = async () => {
-		const res = await axios.get(`/post/timeline/all/${currentUser._id}`);
+		const res = await axios.get(`${API_URL}/post/timeline/all/${currentUser._id}`);
 		return res.data;
 	};
 
 	const getUserPost = async (id: string) => {
-		const res = await axios.get(`/post/by-userId/${id}`);
+		const res = await axios.get(`${API_URL}/post/by-userId/${id}`);
 
 		return res.data;
 	};

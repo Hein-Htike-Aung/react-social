@@ -19,11 +19,11 @@ const Rightbar = ({ user, home }: Props) => {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const [friends, setFriends] = useState<User[]>();
 	const [followed, setFollowed] = useState(
-		currentUser.followings.includes(user?._id),
+		currentUser?.followings?.includes(user?._id),
 	);
 
 	useEffect(() => {
-		setFollowed(currentUser.followings.includes(user?._id));
+		setFollowed(currentUser?.followings?.includes(user?._id));
 	}, [user?._id, currentUser]);
 
 	useEffect(() => {
@@ -34,6 +34,7 @@ const Rightbar = ({ user, home }: Props) => {
 		if (user) {
 			fetchUserFriends();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
 	const getFriends = async () => {

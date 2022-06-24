@@ -48,9 +48,10 @@ const Topbar = () => {
 						<span className='topbarIconBadge'>1</span>
 					</div>
 				</div>
-				<Link to={`/profile/${user.username}`}>
-					<img crossOrigin="anonymous"
-						src={user['profilePicture'] || PF + 'person/noAvatar.png'}
+				<Link to={`/profile/${user?.username}`}>
+					<img
+						crossOrigin='anonymous'
+						src={user?.profilePicture ? PF + user['profilePicture'] : PF + 'person/noAvatar.png'}
 						alt=''
 						className='topbarImg'
 					/>

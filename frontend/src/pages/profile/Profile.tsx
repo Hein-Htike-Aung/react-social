@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import API_URL from '../../api/apiurl';
 import Feed from '../../components/feed/Feed';
 import Rightbar from '../../components/rightbar/Rightbar';
 import Sidebar from '../../components/sidebar/Sidebar';
@@ -26,7 +27,7 @@ const Profile = () => {
 	}, [username]);
 
 	const getUserByUsername = async (username: string) => {
-		const res = await axios(`/user/by-query?username=${username}`);
+		const res = await axios(`${API_URL}/user/by-query?username=${username}`);
 
 		return res.data;
 	};
